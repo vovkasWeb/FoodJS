@@ -34,15 +34,22 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const deadline = "2023-09-28";
+  const deadline = "2023-09-29";
 
   function getTimeRemaining(endtime) {
-    const t = Date.parse(endtime) - Date.parse(new Date());
-    const days = Math.floor(t / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((t / 1000 / 60) % 60);
-    const seconds = Math.floor((t / 1000) % 60);
+    let days = 0;
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
 
+    const t = Date.parse(endtime) - Date.parse(new Date());
+    if (t > 0) {
+    
+    days = Math.floor(t / (1000 * 60 * 60 * 24));
+    hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+    minutes = Math.floor((t / 1000 / 60) % 60);
+    seconds = Math.floor((t / 1000) % 60);
+    }
     return {
       total: t,
       days: days,
