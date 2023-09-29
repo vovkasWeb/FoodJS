@@ -96,13 +96,18 @@ window.addEventListener("DOMContentLoaded", () => {
   const modal = document.querySelector(".modal");
   const modalCloseBtn = document.querySelector("[data-close]");
 
+  function openModal() {
+    modal.classList.toggle("show");
+    document.body.style.overflow = "hidden";
+    clearInterval(modalTimerId);
+  }
+
   modalTrigger.forEach((btn) => {
     btn.addEventListener("click", () => {
       // console.log('kkk');
       // modal.classList.add("show");
       // modal.classList.remove("hide");
-      modal.classList.toggle("show");
-      document.body.style.overflow = "hidden";
+      openModal();
     });
   });
 
@@ -125,8 +130,19 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", () => {
-    if (e.code === "Escape" && modal.classList.contains('show')) {
+    if (e.code === "Escape" && modal.classList.contains("show")) {
       closeModal();
     }
   });
+
+  const modalTimerId = setTimeout(openModal, 10000);
+
+  function showModalByScroll(){
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scroll - 1) {
+      openModal();
+      window.removeEventListener("scroll", showModalByScroll);
+    }
+  }
+
+  window.addEventListener("scroll", showModalByScroll);
 });
