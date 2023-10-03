@@ -189,12 +189,11 @@ window.addEventListener("DOMContentLoaded", function () {
   //         });
   //     });
 
-  axios.get("http://localhost:3000/posts").
-  then(data =>{
+  axios.get("http://localhost:3000/posts").then((data) => {
     console.log(data);
-    data.forEach(({img, altimg, title, descr, price}) => {
-      new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
-    });
+    // data.forEach(({img, altimg, title, descr, price}) => {
+    //   new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
+    // });
   });
 
   // Forms
@@ -285,4 +284,47 @@ window.addEventListener("DOMContentLoaded", function () {
       closeModal();
     }, 4000);
   }
+  //Slider
+
+  const slides = document.querySelectorAll(".offer__slide");
+  const prev = document.querySelector(".offer__slider-prev");
+  const next = document.querySelector(".offer__slider-next");
+  const total = this.document.querySelector("#total");
+  const current = this.document.querySelector("#current");
+  let slideIndex = 1;
+  showSlineder(slideIndex);
+
+  if (slides.length < 10) {
+    total.textContent = `0${slides.length}`;
+  } else {
+    total.textContent = slides.length;
+  }
+
+  function showSlineder(n) {
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    slides.forEach((item) => (item.style.display = "none"));
+
+    slides[slideIndex - 1].style.display = "block";
+
+    if (slides.length < 10) {
+      current.textContent = `0${slideIndex}`;
+    } else {
+      current.textContent = slideIndex;
+    }
+  }
+
+  function plusSlider(n) {
+    showSlineder((slideIndex += n));
+  }
+  prev.addEventListener("click", () => {
+    plusSlider(-1);
+  });
+  next.addEventListener("click", () => {
+    plusSlider(1);
+  });
 });
